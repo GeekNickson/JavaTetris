@@ -2,7 +2,23 @@ package game;
 
 public class TetroZ extends Tetromino {
 	//Z
-	int[][] shape = {{1, 1, 0},
-					 {0, 1, 1},
-					 {0, 0, 0}};
+	
+	public TetroZ() {
+		int[][][] shapeInit = {
+				{{1, 1, 0},
+				 {0, 1, 1}}
+				,
+				{{0, 1},
+				 {1, 1},
+				 {1, 0}}
+				,
+				{{1, 1, 0},
+				 {0, 1, 1}}
+				,
+				{{0, 1},
+				 {1, 1},
+				 {1, 0}}
+				};
+		shape = shapeInit;
+	}
 }
