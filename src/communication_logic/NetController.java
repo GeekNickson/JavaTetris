@@ -5,7 +5,7 @@ import java.net.*;
 import java.io.*;
 
 public class NetController {
-	static Socket clientSocket;
+	private Socket clientSocket;
 
 	public NetController() throws UnknownHostException, IOException {
 		clientSocket = new Socket("localhost", 5050);
