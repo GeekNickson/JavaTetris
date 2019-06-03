@@ -22,12 +22,12 @@ public class RegisterFrameListener implements ActionListener {
 			String password = regFrame.getPasswordTextField().getText();
 			// TODO do all the registration stuff
 			GeneralController.register(new RequestReg(username, password));
-			regFrame.dispose();
 			mainFrame.setEnabled(true);
+			regFrame.dispose();
 		}
 		if (event.getSource() == regFrame.getExitButton()) {
-			regFrame.dispose();
 			mainFrame.setEnabled(true);
+			regFrame.dispose();
 		}
 	}
 }
