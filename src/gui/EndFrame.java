@@ -7,7 +7,7 @@ import java.awt.Image;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
-public class EndForm extends JFrame {
+public class EndFrame extends JFrame {
 
 	private JLabel gameOverLabel;
 	private JLabel scoreLabel;
@@ -17,7 +17,7 @@ public class EndForm extends JFrame {
 	private Font mainFont = new Font("Comic Sans MS", Font.PLAIN, 24);
 	private Font levelFont = new Font("Showcard Gothic", Font.PLAIN, 24);
 	private Font buttonsFont = new Font("Comic Sans MS", Font.PLAIN, 16);
-	public EndForm() {
+	public EndFrame() {
 		setLayout(null);
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -47,4 +47,41 @@ public class EndForm extends JFrame {
 		setSize(300,300);
 		setVisible(true);
 	}
+	public JLabel getGameOverLabel() {
+		return gameOverLabel;
+	}
+	public void setGameOverLabel(JLabel gameOverLabel) {
+		this.gameOverLabel = gameOverLabel;
+	}
+	public JLabel getScoreLabel() {
+		return scoreLabel;
+	}
+	public void setScoreLabel(JLabel scoreLabel) {
+		this.scoreLabel = scoreLabel;
+	}
+	public JLabel getActualScoreLabel() {
+		return actualScoreLabel;
+	}
+	public void setActualScoreLabel(JLabel actualScoreLabel) {
+		this.actualScoreLabel = actualScoreLabel;
+	}
+	public JButton getPlayAgainButton() {
+		return playAgainButton;
+	}
+	public void setPlayAgainButton(JButton playAgainButton) {
+		this.playAgainButton = playAgainButton;
+	}
+	public JButton getReturnToMainMenuButton() {
+		return returnToMainMenuButton;
+	}
+	public void setReturnToMainMenuButton(JButton returnToMainMenuButton) {
+		this.returnToMainMenuButton = returnToMainMenuButton;
+	}
+	public Font getMainFont() {
+		return mainFont;
+	}
+	public void setMainFont(Font mainFont) {
+		this.mainFont = mainFont;
+	}
+	
 }

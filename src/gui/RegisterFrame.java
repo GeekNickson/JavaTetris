@@ -1,10 +1,9 @@
 package gui;
 
-import java.awt.Color;
-import java.awt.Font;
+import java.awt.*;
 import javax.swing.*;
 
-public class RegisterForm extends JFrame {
+public class RegisterFrame extends JFrame {
 	private JLabel usernameLabel;
 	private JLabel passwordLabel;
 	private JTextField usernameTextField;
@@ -13,7 +12,7 @@ public class RegisterForm extends JFrame {
 	private JButton exitButton;
 	private Font mainFont = new Font("Comic Sans MS", Font.PLAIN, 24);
 
-	public RegisterForm() {
+	public RegisterFrame() {
 		setLayout(null);
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
