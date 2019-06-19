@@ -1,16 +1,29 @@
 package idstuff;
 
+import java.awt.List;
+import java.util.ArrayList;
+import java.util.Collections;
+
 import tttp.*;
 
 public class IdOperator {
+	private static IdOperator operator = new IdOperator();
+
+    public static IdOperator getInstance() {
+        if (operator == null)
+        	operator = new IdOperator();
+
+        return operator;
+    }
+	
 	public static final int PLAYER_ALREADY_EXISTS = -4;
 	public static final int REGISTER_SUCCESS = -5;
 	
-	private IdStorage storage;
+	private IdStorage storage = IdStorage.getInstance();
 	
 	
-	public IdOperator(String storagePath) {
-		storage = new IdStorage(storagePath);
+	public void create(String storagePath) {
+		IdStorage.getInstance().create(storagePath);
 	}
 	
 	public int register(RequestReg request) {
@@ -27,7 +40,7 @@ public class IdOperator {
 		Player result = new Player(request.getName(),request.getPass());
 		if(!storage.contains(result)) {
 			// name match failed
-			// there's no player with this name
+			// there's no player with operator name
 			// TODO send message: there's no such user
 			result.setId(Player.WRONG_NAME);
 			return result;
@@ -45,5 +58,14 @@ public class IdOperator {
 		}
 		// TODO send message: auth successful
 		return authenticatedPlayer;
+	}
+	
+	public Player[] getLeaders(int num) {
+		Collections.sort( IdStorage.getInstance());
+		Player[] res = new Player[num];
+		for(int i = 0; i<num; i++) {
+			res[i] = IdStorage.getInstance().toArray(new Player[0])[i];
+		}
+		return res;
 	}
 }

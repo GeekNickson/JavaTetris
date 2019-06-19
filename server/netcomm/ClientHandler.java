@@ -58,9 +58,6 @@ public class ClientHandler implements Runnable{
 		if(msg instanceof RequestReg) {
 			register((RequestReg)msg);
 		}
-		if(msg instanceof RequestStart) {
-			start((RequestStart)msg);
-		}
 	}
 	
 	private void sendResponse() {
@@ -90,6 +87,7 @@ public class ClientHandler implements Runnable{
 	
 	private void register(RequestReg regRequest) {
 		int res = idOperator.register(regRequest);
+		Protocol response;
 		switch (res){
 			case IdOperator.PLAYER_ALREADY_EXISTS:
 				//TODO player already exists message
@@ -108,7 +106,4 @@ public class ClientHandler implements Runnable{
 		
 	}
 	
-	private void start(RequestStart startRequest) {
-		
-	}
 }

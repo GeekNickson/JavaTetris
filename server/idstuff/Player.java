@@ -1,6 +1,6 @@
 package idstuff;
 
-public class Player {
+public class Player implements Comparable{
 	public static final int WRONG_PASS = -2;
 	public static final int WRONG_NAME = -3;
 	
@@ -52,6 +52,16 @@ public class Player {
 	}
 	public void setMaxScore(int maxScore) {
 		this.maxScore = maxScore;
+	}
+
+	@Override
+	public int compareTo(Object arg) {
+		Player p = (Player)arg;
+		int res = 0;
+		if(this.getMaxScore()>p.maxScore) res = 1;
+		if(this.getMaxScore()<p.maxScore) res = -1;
+		
+		return res;
 	}
 	
 }
