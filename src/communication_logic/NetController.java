@@ -6,27 +6,32 @@ import java.io.*;
 
 public class NetController {
 	private Socket clientSocket;
-
-	public NetController() throws UnknownHostException, IOException {
-		clientSocket = new Socket("localhost", 5050);
-		//System.out.println("Connection has benn established");
+	private ObjectOutputStream out;
+	private ObjectInputStream in;
+	public NetController(String ip, int port) throws UnknownHostException, IOException {
+		clientSocket = new Socket(ip, port);
+		out = new ObjectOutputStream(clientSocket.getOutputStream());
+		in = new ObjectInputStream(clientSocket.getInputStream());
 	}
 
 	public void login(RequestAuth namePass) throws IOException {
-		ObjectOutputStream oos = new ObjectOutputStream(clientSocket.getOutputStream());
-		oos.writeObject(namePass);
-		oos.close();
+		out.writeObject(namePass);
 	}
 
 	public void register(RequestReg namePass) throws IOException {
-		ObjectOutputStream oos = new ObjectOutputStream(clientSocket.getOutputStream());
-		oos.writeObject(namePass);
-		oos.close();
+		out.writeObject(namePass);
 	}
 
 	public void sendLevel(RequestStart level) throws IOException {
-		ObjectOutputStream oos = new ObjectOutputStream(clientSocket.getOutputStream());
-		oos.writeObject(level);
-		oos.close();
+		out.writeObject(level);
+	}
+	
+	public ResponseReg receiveRegResponse() throws ClassNotFoundException, IOException {
+		ResponseReg responseReg = (ResponseReg) in.readObject();
+		return responseReg;
+	}
+	public ResponseAuth receiveAuthResponce() throws ClassNotFoundException, IOException {
+		ResponseAuth responseAuth = (ResponseAuth) in.readObject();
+		return responseAuth;
 	}
 }

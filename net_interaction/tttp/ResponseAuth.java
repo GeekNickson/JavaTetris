@@ -8,11 +8,11 @@ public class ResponseAuth extends Protocol {
 		this.message = message;
 	}
 	
-	boolean getStatus() {
+	public boolean getStatus() {
 		return status;
 	}
 	
-	String getMessage() {
+	public String getMessage() {
 		return message;
 	}
 }

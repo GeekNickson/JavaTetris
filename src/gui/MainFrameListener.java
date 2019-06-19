@@ -31,6 +31,9 @@ public class MainFrameListener implements ActionListener {
 			String username = mainFrame.getUsernameTextField().getText();
 			String password = mainFrame.getPasswordTextField().getText();
 			GeneralController.login(new RequestAuth(username, password));
+			String ip = mainFrame.getIpAddressTextField().getText();
+			int port = Integer.parseInt(mainFrame.getPortTextField().getText());
+			GeneralController.login(new RequestAuth(username, password), ip, port);
 			//RequestAuth a = new RequestAuth(username, password);
 			//System.out.println(a.getName()+ a.getPass());
 
@@ -45,6 +48,11 @@ public class MainFrameListener implements ActionListener {
 		}
 		if (event.getSource() == mainFrame.getPlayButton()) {
 			mainFrame.playTetris();
+<<<<<<< HEAD
+=======
+			// TODO send chosen level to the server
+			GeneralController.play();
+>>>>>>> 1f4f0268158f0397568bd3c243259a1386e2ba62
 		}
 		if (event.getSource() == mainFrame.getLevelOneButton()) {
 			mainFrame.setChosenLevel(1);
