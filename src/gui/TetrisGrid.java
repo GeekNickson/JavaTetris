@@ -52,4 +52,6 @@ public class TetrisGrid extends Canvas {
 		width = columns * cellSize;
 		height = rows * cellSize;
 	}
+	
+	
 }
