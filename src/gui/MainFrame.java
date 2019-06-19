@@ -38,10 +38,13 @@ public class MainFrame extends JFrame {
 	private Font levelFont = new Font("Showcard Gothic", Font.PLAIN, 24);
 	private Font levelTextFont = new Font("Showcard Gothic", Font.PLAIN, 14);
 	private TetrisGrid tetrisGrid;
+	private TetrisGridListener tetrisGridListener;
 	private int rows = 21;
 	private int columns = 10;
 	private int chosenLevel;
+	
 
+	
 	public MainFrame() {
 		// TODO follow singleton design pattern
 		setLayout(null);
@@ -170,6 +173,7 @@ public class MainFrame extends JFrame {
 		tetrisGrid.setBounds(1200, 35, columns * 25 + 5, rows * 25 + 5);
 		this.repaint();
 		add(tetrisGrid);
+		tetrisGridListener = new TetrisGridListener(tetrisGrid);
 		scoreLabel = new JLabel("Score");
 		scoreLabel.setBounds(1500, 35, 100, 20);
 		scoreLabel.setFont(mainFont);
