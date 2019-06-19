@@ -1,6 +1,10 @@
 package gui;
 
 import java.awt.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
+
 import javax.swing.*;
 
 public class RegisterFrame extends JFrame {
@@ -11,7 +15,7 @@ public class RegisterFrame extends JFrame {
 	private JButton registerButton;
 	private JButton exitButton;
 	private Font mainFont = new Font("Comic Sans MS", Font.PLAIN, 24);
-
+	
 	public RegisterFrame() {
 		setLayout(null);
 		setResizable(false);
@@ -45,6 +49,7 @@ public class RegisterFrame extends JFrame {
 		setVisible(true);
 	}
 
+      
 	public JLabel getUsernameLabel() {
 		return usernameLabel;
 	}
