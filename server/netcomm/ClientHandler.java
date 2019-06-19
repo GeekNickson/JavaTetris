@@ -17,9 +17,9 @@ public class ClientHandler implements Runnable{
 	//Protocol messageIncoming;
 	Protocol messageOutgoing;
 	
-	public ClientHandler(Socket clientSocket,IdOperator idOperator) {
+	public ClientHandler(Socket clientSocket) {
 		socket = clientSocket;
-		this.idOperator = idOperator;
+		idOperator = IdOperator.getInstance();
 		try {
 			output = new ObjectOutputStream(socket.getOutputStream());
 			input = new ObjectInputStream(socket.getInputStream());
@@ -58,15 +58,25 @@ public class ClientHandler implements Runnable{
 		if(msg instanceof RequestReg) {
 			register((RequestReg)msg);
 		}
+		if(msg instanceof RequestLeaderboard) {
+			
+		}
 	}
 	
-	private void sendResponse() {
+	public void sendObject(Protocol p) {
+		try {
+			output.flush();
+			output.writeObject(p);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 	}
 	
 	private void authenticate(RequestAuth authRequest) {
 		player = idOperator.authenticate(authRequest);
-		Protocol response;
+		Protocol response = null;
 		switch (player.getId()){
 			case Player.WRONG_NAME:
 				//TODO wrong name message
@@ -83,23 +93,32 @@ public class ClientHandler implements Runnable{
 				response = new ResponseAuth(true, "Authentication successfull");
 				break;
 		}
+		sendObject(response);
 	}
 	
 	private void register(RequestReg regRequest) {
 		int res = idOperator.register(regRequest);
-		Protocol response;
+		Protocol response = null;
 		switch (res){
 			case IdOperator.PLAYER_ALREADY_EXISTS:
 				//TODO player already exists message
+				response = new ResponseReg(false, "Player already exists");
 				break;
 			case IdOperator.REGISTER_SUCCESS:
 				//TODO register success message
+				response = new ResponseReg(true, "Register successs");
 				break;
 			default:
 				//TODO unknown error
-				auth = true;
+				response = new ResponseReg(false, "unknown error");
+				auth = false;
 				break;
 		}
+		sendObject(response);
+	}
+	
+	private void sendLeaders() {
+		
 	}
 	
 	private void endGame(RequestEnd endRequest) {

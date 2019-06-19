@@ -26,7 +26,7 @@ public class TetrisServer implements Runnable{
 		while(serverActive) {
 			try {
 				Socket client = serverSocket.accept();
-				Thread clientHandlerThread = new Thread(new ClientHandler(client,idOperator));
+				Thread clientHandlerThread = new Thread(new ClientHandler(client));
 				clientHandlerThread.run();
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
