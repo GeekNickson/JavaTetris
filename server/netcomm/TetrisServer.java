@@ -13,7 +13,9 @@ public class TetrisServer implements Runnable{
 	
 	public TetrisServer(ServerSocket socket) {
 		serverSocket = socket;
+		// loading id-password base
 		idOperator = new IdOperator("Players.txt");
+		// activating the server
 		serverActive = true;
 	}
 	

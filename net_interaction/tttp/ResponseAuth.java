@@ -1,9 +1,9 @@
 package tttp;
 
-public class ResponseReg extends Protocol {
+public class ResponseAuth extends Protocol {
 	private boolean status;
 	private String message;
-	public ResponseReg(boolean status, String message) {
+	public ResponseAuth(boolean status, String message) {
 		this.status = status;
 		this.message = message;
 	}

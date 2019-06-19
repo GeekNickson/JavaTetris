@@ -11,12 +11,22 @@ public class ClientHandler implements Runnable{
 	private Player player = null;
 	private boolean auth;
 	private IdOperator idOperator;
+	ObjectOutputStream output;
+	ObjectInputStream input;
+	
 	//Protocol messageIncoming;
 	Protocol messageOutgoing;
 	
 	public ClientHandler(Socket clientSocket,IdOperator idOperator) {
 		socket = clientSocket;
 		this.idOperator = idOperator;
+		try {
+			output = new ObjectOutputStream(socket.getOutputStream());
+			input = new ObjectInputStream(socket.getInputStream());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		auth = false;
 	}
 	
@@ -24,17 +34,12 @@ public class ClientHandler implements Runnable{
 	public void run() {
 		//connection established
 		// now it's time to listen for the commands
-		//and send a responses, triggered by client and by timer
+		//and send a responses
 		while(true) {
 			try {
-				InputStream fromClientIS =  socket.getInputStream();
-				ObjectInputStream incomingObjectStream = new ObjectInputStream(fromClientIS);
-				if(incomingObjectStream.available()>0) {
-					Protocol messageIncoming = (Protocol)incomingObjectStream.readObject();
-					processIncomingMessage(messageIncoming);
-				}
-				
-				
+				//listen for messages
+				Protocol messageIncoming = (Protocol)input.readObject();
+				processIncomingMessage(messageIncoming);				
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -42,15 +47,13 @@ public class ClientHandler implements Runnable{
 		}
 	}
 	
+	
 	private void processIncomingMessage(Protocol msg){
 		if(msg instanceof RequestAuth) {
 			authenticate((RequestAuth) msg);
 		}
 		if(msg instanceof RequestEnd) {
 			endGame((RequestEnd)msg);
-		}
-		if(msg instanceof RequestMove) {
-			move((RequestMove)msg);
 		}
 		if(msg instanceof RequestReg) {
 			register((RequestReg)msg);
@@ -60,18 +63,27 @@ public class ClientHandler implements Runnable{
 		}
 	}
 	
+	private void sendResponse() {
+		
+	}
+	
 	private void authenticate(RequestAuth authRequest) {
 		player = idOperator.authenticate(authRequest);
+		Protocol response;
 		switch (player.getId()){
 			case Player.WRONG_NAME:
 				//TODO wrong name message
+				//sending a response
+				response = new ResponseAuth(false, "There's no user with such name");
 				break;
 			case Player.WRONG_PASS:
 				//TODO wrong pass message
+				response = new ResponseAuth(false, "Wrong password");
 				break;
 			default:
 				//authentication successful
 				auth = true;
+				response = new ResponseAuth(true, "Authentication successfull");
 				break;
 		}
 	}
@@ -93,10 +105,6 @@ public class ClientHandler implements Runnable{
 	}
 	
 	private void endGame(RequestEnd endRequest) {
-		
-	}
-	
-	private void move(RequestMove moveRequest) {
 		
 	}
 	
