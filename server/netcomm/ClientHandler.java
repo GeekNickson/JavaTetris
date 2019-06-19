@@ -118,7 +118,8 @@ public class ClientHandler implements Runnable{
 	}
 	
 	private void sendLeaders() {
-		
+		ResponseLeaderboard response = new ResponseLeaderboard();
+		sendObject(response);
 	}
 	
 	private void endGame(RequestEnd endRequest) {

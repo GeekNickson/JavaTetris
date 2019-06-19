@@ -45,8 +45,6 @@ public class MainFrameListener implements ActionListener {
 		}
 		if (event.getSource() == mainFrame.getPlayButton()) {
 			mainFrame.playTetris();
-			// TODO send chosen level to the server
-			GeneralController.play(new RequestStart(mainFrame.getChosenLevel()));
 		}
 		if (event.getSource() == mainFrame.getLevelOneButton()) {
 			mainFrame.setChosenLevel(1);

@@ -11,8 +11,13 @@ public class TetrisServer implements Runnable{
 	boolean serverActive;
 	
 	
-	public TetrisServer(ServerSocket socket) {
-		serverSocket = socket;
+	public TetrisServer(int port) {
+		try {
+			serverSocket = new ServerSocket(port);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		// loading id-password base
 		IdOperator.getInstance().create("Players.txt");
 		// activating the server
