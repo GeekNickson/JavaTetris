@@ -30,7 +30,6 @@ public class MainFrameListener implements ActionListener {
 			// TODO send username and password to the server
 			String username = mainFrame.getUsernameTextField().getText();
 			String password = mainFrame.getPasswordTextField().getText();
-			GeneralController.login(new RequestAuth(username, password));
 			String ip = mainFrame.getIpAddressTextField().getText();
 			int port = Integer.parseInt(mainFrame.getPortTextField().getText());
 			GeneralController.login(new RequestAuth(username, password), ip, port);
