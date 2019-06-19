@@ -2,8 +2,13 @@ package gui;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
+import javax.swing.*;
+
 import tttp.*;
 import general_controller.*;
+import java.awt.*;
+
 public class RegisterFrameListener implements ActionListener {
 	RegisterFrame regFrame;
 	MainFrame mainFrame;
@@ -29,5 +34,6 @@ public class RegisterFrameListener implements ActionListener {
 			mainFrame.setEnabled(true);
 			regFrame.dispose();
 		}
+			
 	}
 }
