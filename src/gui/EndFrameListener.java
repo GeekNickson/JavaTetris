@@ -24,7 +24,7 @@ public class EndFrameListener implements ActionListener {
 		}
 		if (event.getSource() == endFrame.getReturnToMainMenuButton()) {
 			mainFrame.setEnabled(true);
-			mainFrame.connectToServer();
+			mainFrame.login();
 			endFrame.dispose();
 		}
 	}

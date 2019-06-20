@@ -18,19 +18,29 @@ public class GeneralController {
 		mainFrame = new MainFrame();
 		mainFrameListener = new MainFrameListener(mainFrame);
 	}
-
-	public static void login(RequestAuth namePass, String ip, int port) {
+	
+	public static void connect(String ip, int port) {
 		try {
 			netController = new NetController(ip, port);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	public static void login(RequestAuth namePass) {
+		try {
+			System.out.println("Logging in...");
 			netController.login(namePass);
 			ResponseAuth responseAuth = netController.receiveAuthResponce();
+			
 			//TODO display this
 			if (!responseAuth.getStatus()) {
 				System.out.println(responseAuth.getMessage());
 				mainFrame.disconnectFromServer();
 			} else {
 				System.out.println(responseAuth.getMessage());
-				mainFrame.connectToServer();
+				mainFrame.login();
 			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -40,9 +50,21 @@ public class GeneralController {
 			e.printStackTrace();
 		}
 	}
+	
+	public static void disconnect() {
+		try {
+			GameField.getInstance().stopGame();
+			mainFrame.getTetrisGrid().stop();
+			netController.disconnect();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 
 	public static void register(RequestReg namePass) {
 		try {
+			System.out.println("Registering...");
 			netController.register(namePass);
 			ResponseReg responseReg = netController.receiveRegResponse();
 			if (!responseReg.getStatus()) {
@@ -58,12 +80,19 @@ public class GeneralController {
 			e.printStackTrace();
 		}
 	}
+	
+	public static void surrender(int score) {
+		GameField.getInstance().stopGame();
+		mainFrame.getTetrisGrid().stop();
+		netController.surrender(score);
+	}
 
 	public static void play() {
 		mainFrame.playTetris();
 		int lvl = mainFrame.getChosenLevel();
 		//start game
 		GameField.getInstance().setLevel(lvl);
+		GameField.getInstance().startGame();
 		mainFrame.getTetrisGrid().startGame();
 	}
 }

@@ -24,6 +24,7 @@ public class MainFrame extends JFrame {
 	private JTextField passwordTextField;
 	private JButton connectButton;
 	private JButton disconnectButton;
+	private JButton loginButton;
 	private JButton registerButton;
 	private JButton playButton;
 	private JButton levelOneButton;
@@ -54,21 +55,21 @@ public class MainFrame extends JFrame {
 		usernameLabel.setBounds(50, 30, 130, 30);
 		usernameLabel.setFont(mainFont);
 		add(usernameLabel);
-		usernameTextField = new JTextField("enter your name");
+		usernameTextField = new JTextField("");
 		usernameTextField.setBounds(200, 30, 200, 30);
 		add(usernameTextField);
 		passwordLabel = new JLabel("Password:");
 		passwordLabel.setBounds(50, 100, 130, 30);
 		passwordLabel.setFont(mainFont);
 		add(passwordLabel);
-		passwordTextField = new JTextField("enter your password");
+		passwordTextField = new JTextField("");
 		passwordTextField.setBounds(200, 100, 200, 30);
 		add(passwordTextField);
 		ipLabel = new JLabel("Ip address:");
 		ipLabel.setBounds(50, 170, 130, 30);
 		ipLabel.setFont(mainFont);
 		add(ipLabel);
-		ipAddressTextField = new JTextField("enter server's ip");
+		ipAddressTextField = new JTextField("localhost");
 		ipAddressTextField.setBounds(200, 170, 200, 30);
 		add(ipAddressTextField);
 		portLabel = new JLabel("Used port:");
@@ -90,10 +91,18 @@ public class MainFrame extends JFrame {
 		disconnectButton.setEnabled(false);
 		add(disconnectButton);
 		registerButton = new JButton("Register");
-		registerButton.setBounds(150, 380, 200, 30);
+		registerButton.setBounds(255, 380, 200, 30);
 		registerButton.setFont(mainFont);
 		registerButton.setBackground(new Color(247, 170, 232));
 		add(registerButton);
+		//login
+		loginButton = new JButton("Login");
+		loginButton.setBounds(30, 380, 200, 30);
+		loginButton.setFont(mainFont);
+		loginButton.setBackground(new Color(247, 170, 232));
+		add(loginButton);
+		//
+		
 		// Game menu
 		usernameLabel = new JLabel("");
 		usernameLabel.setFont(mainFont);
@@ -168,7 +177,7 @@ public class MainFrame extends JFrame {
 		scoreboardTable.setRowHeight(40);
 		add(scoreboardTable);
 		// Game
-		tetrisGrid = new TetrisGrid(rows, columns);
+		tetrisGrid = new TetrisGrid(this,rows, columns);
 		tetrisGrid.setVisible(false);
 		tetrisGrid.setBounds(560, 60, columns * 25 + 5, rows * 25 + 5);
 		this.repaint();
@@ -197,7 +206,7 @@ public class MainFrame extends JFrame {
 		setVisible(true);
 	}
 
-	public void connectToServer() {
+	public void login() {
 		usernameTextField.setEnabled(false);
 		passwordTextField.setEnabled(false);
 		ipAddressTextField.setEnabled(false);
@@ -205,6 +214,7 @@ public class MainFrame extends JFrame {
 		connectButton.setEnabled(false);
 		disconnectButton.setEnabled(true);
 		registerButton.setEnabled(false);
+		loginButton.setEnabled(false);
 		playButton.setEnabled(true);
 		levelOneButton.setEnabled(true);
 		levelFiveButton.setEnabled(true);
@@ -236,6 +246,7 @@ public class MainFrame extends JFrame {
 		connectButton.setEnabled(true);
 		disconnectButton.setEnabled(false);
 		registerButton.setEnabled(true);
+		loginButton.setEnabled(true);
 		playButton.setEnabled(false);
 		levelOneButton.setEnabled(false);
 		levelFiveButton.setEnabled(false);
@@ -268,6 +279,7 @@ public class MainFrame extends JFrame {
 		connectButton.setEnabled(false);
 		disconnectButton.setEnabled(true);
 		registerButton.setEnabled(false);
+		loginButton.setEnabled(false);
 		playButton.setVisible(false);
 		levelOneButton.setVisible(false);
 		levelFiveButton.setVisible(false);
@@ -435,6 +447,14 @@ public class MainFrame extends JFrame {
 
 	public void setRegisterButton(JButton registerButton) {
 		this.registerButton = registerButton;
+	}
+	
+	public JButton getLoginButton() {
+		return loginButton;
+	}
+
+	public void setLoginButton(JButton loginButton) {
+		this.loginButton = loginButton;
 	}
 
 	public JButton getPlayButton() {

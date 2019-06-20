@@ -20,39 +20,43 @@ public class GameField{
     boolean falling = false;
 	private static final int W = 10;
 	private static final int H = 21;
-	int level = 1;
+	private int level = 1;
 	//int figColor = 255;
 	
-	int rotCount = 0;
+	private int rotCount = 0;
 	
-	PosXY spawnPos = new PosXY(5,1);
-	PosXY figCenter = new PosXY(1,1);
-	PosXY currentFigPos = spawnPos;
+	private PosXY spawnPos = new PosXY(5,1);
+	private PosXY figCenter = new PosXY(1,1);
+	private PosXY currentFigPos = spawnPos;
 	
 	Tetromino fallingTetromino;
 	
-	int score=0;
+	private int score=0;
 	
-	TimeManager time;
+	private TimeManager time;
 	
 	// consists only of 0 and 1
 	// x counts from left to right
 	// y counts from top to bottom
-	int field[][] = new int[W][H];
+	int field[][] = new int[H][W];
 	
 	boolean gameLasts = true;
 	
 	public GameField() {
 		// fill with zeros
-		time = new TimeManager((int)(1000/level));
+		create();
+	}
+	
+	public void create() {
+		time = new TimeManager(1000-(level*20));
 		for(int x = 0; x < W; x++) {
 			for(int y = 0; y < H; y++) {
-				field[x][y] = 0;
+				field[y][x] = 0;
 			}
 		}
 		fallingTetromino = generateTetromino();
+		startGame();
 	}
-	
 	
 	
 	//
@@ -64,8 +68,8 @@ public class GameField{
 		PosXY offsetField = new PosXY(posField.x - figCenter.x, posField.y - figCenter.y);
 		for(int y = 0; y < (fig.length); y++) {
 			for(int x = 0; x < (fig[0].length); x++) {
-				field[x+offsetField.x][y+offsetField.y] =
-						field[x+offsetField.x][y+offsetField.y]+ coef*fig[y][x];
+				field[y+offsetField.y][x+offsetField.x] =
+						field[y+offsetField.y][x+offsetField.x]+ coef*fig[y][x];
 			}
 		}
 	}
@@ -157,7 +161,7 @@ public class GameField{
 		
 		//place zeros at the upper row
 		for (int x = 0; x < W; x++) {
-			field[x][0] = 0;
+			field[0][x] = 0;
 		}
 	}
 	
@@ -213,7 +217,7 @@ public class GameField{
 		System.out.println("---------------------");
 		for(int y = 0; y < H ;y++) {
 			for (int x = 0; x < W; x++) {
-				String square = field[x][y]>0 ? "1" : "0"; 
+				String square = field[y][x]>0 ? "1" : "0"; 
 				System.out.print(square);
 			}
 			System.out.println();
@@ -231,7 +235,7 @@ public class GameField{
 			}
 			
 			//hit other figures
-			if((field[pos.x][pos.y+1]>0)) {
+			if((field[pos.y+1][pos.x]>0)) {
 				System.out.println("hit");
 				return false;
 			}
@@ -253,13 +257,18 @@ public class GameField{
 	
 	public void startGame() {
 		falling = false;
-		currentFigPos = spawnPos;
-		field = new int[W][H];
+		currentFigPos = new PosXY(spawnPos.x,spawnPos.y);
+		field = new int[H][W];
+		score = 0;
 		gameLasts = true;
 	}
 	
 	public void stopGame() {
 		gameLasts = false;
+	}
+	
+	public int getScore() {
+		return score;
 	}
 	
 
@@ -279,8 +288,10 @@ public class GameField{
 				if(canFallDown()) {
 					moveDown();
 				}else {
+					score+=1;
 					//if hit bottom or other figure below
-					burnFullRows();
+					//TODO fix burning rows
+					//burnFullRows();
 					falling = false;
 				}
 			}

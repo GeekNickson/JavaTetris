@@ -2,6 +2,7 @@ package communication_logic;
 
 import tttp.*;
 import java.net.*;
+
 import java.io.*;
 
 public class NetController {
@@ -22,6 +23,26 @@ public class NetController {
 		out.writeObject(namePass);
 	}
 
+	public void surrender(int score) {
+		try {
+			out.writeObject(new RequestEnd(score));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public void disconnect() throws IOException{
+		try {
+			RequestDisconnect rd = new RequestDisconnect();
+			out.writeObject(rd);
+			out.close();
+			in.close();
+			clientSocket.close();
+		}catch(IOException e) {
+			e.printStackTrace();
+		}
+	}
 	
 	public ResponseReg receiveRegResponse() throws ClassNotFoundException, IOException {
 		ResponseReg responseReg = (ResponseReg) in.readObject();

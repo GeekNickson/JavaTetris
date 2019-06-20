@@ -20,17 +20,22 @@ public class TetrisGrid extends Canvas implements ActionListener{
 	private int rightOffset = leftOffset + gridLineThiccness;
 	private int width = columns * cellSize;
 	private int height = rows * cellSize;
+	private Color figColor = new Color(144, 144, 255);
+	private Color frameWhite = new Color(100, 100, 100);
 	
-	int field[][] = new int[columns][columns];
+	MainFrame mainFrame;
+	
+	int field[][] = new int[rows][columns];
 
 	public TetrisGrid() {
-		updateSize();
+		//updateSize();
 	}
 
-	public TetrisGrid(int rows, int columns) {
+	public TetrisGrid(MainFrame mainFrame ,int rows, int columns) {
+		this.mainFrame = mainFrame;
 		this.columns = columns;
 		this.rows = rows;
-		updateSize();
+		//updateSize();
 	}
 
 	public void paint(Graphics g) {
@@ -48,12 +53,11 @@ public class TetrisGrid extends Canvas implements ActionListener{
 	}
 	
 	public void paintField(Graphics g) {
-		Random ran = new Random();
+		//Random ran = new Random();
 		for(int y = 0; y < rows ;y++) {
 			for (int x = 0; x < columns; x++) {
-				int col = field[x][y];
-//				if (col>0)System.out.println("white");
-				g.setColor(new Color(144*col, 144*col, 255*col));
+				Color color = (field[y][x]>0)? figColor:frameWhite;
+				g.setColor(color);
 				g.fillRect(x*cellSize,y*cellSize,cellSize,cellSize);
 			}
 		}
@@ -82,6 +86,10 @@ public class TetrisGrid extends Canvas implements ActionListener{
 	public void startGame() {
 		timer.start();
 	}
+	
+	public void stop() {
+		timer.stop();
+	}
 
 	@Override
 	public void actionPerformed(ActionEvent ae) {
@@ -89,7 +97,7 @@ public class TetrisGrid extends Canvas implements ActionListener{
 	    if(ae.getSource()==timer){
 	    	GameField.getInstance().triggerUpdate();
 	    	field = GameField.getInstance().getField();
-	    	//GameField.getInstance().printField();
+	    	mainFrame.getCurrentScoreLabel().setText(Integer.toString(GameField.getInstance().getScore()));
 	    	repaint();
 	    }
 	}

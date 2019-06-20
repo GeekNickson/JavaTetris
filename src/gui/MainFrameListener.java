@@ -14,6 +14,7 @@ public class MainFrameListener implements ActionListener {
 		mainFrame.getConnectButton().addActionListener(this);
 		mainFrame.getDisconnectButton().addActionListener(this);
 		mainFrame.getRegisterButton().addActionListener(this);
+		mainFrame.getLoginButton().addActionListener(this);
 		mainFrame.getPlayButton().addActionListener(this);
 		mainFrame.getLevelOneButton().addActionListener(this);
 		mainFrame.getLevelFiveButton().addActionListener(this);
@@ -26,18 +27,24 @@ public class MainFrameListener implements ActionListener {
 
 	public void actionPerformed(ActionEvent event) {
 		if (event.getSource() == mainFrame.getConnectButton()) {
-			mainFrame.connectToServer();
 			// TODO send username and password to the server
-			String username = mainFrame.getUsernameTextField().getText();
-			String password = mainFrame.getPasswordTextField().getText();
+			
 			String ip = mainFrame.getIpAddressTextField().getText();
 			int port = Integer.parseInt(mainFrame.getPortTextField().getText());
-			GeneralController.login(new RequestAuth(username, password), ip, port);
+			GeneralController.connect(ip, port);
 			//RequestAuth a = new RequestAuth(username, password);
 			//System.out.println(a.getName()+ a.getPass());
 
 		}
+		if(event.getSource() == mainFrame.getLoginButton()) {
+			System.out.println("login button pressed");
+			mainFrame.login();
+			String username = mainFrame.getUsernameTextField().getText();
+			String password = mainFrame.getPasswordTextField().getText();
+			GeneralController.login(new RequestAuth(username, password));
+		}
 		if (event.getSource() == mainFrame.getDisconnectButton()) {
+			GeneralController.disconnect();
 			mainFrame.disconnectFromServer();
 		}
 		if (event.getSource() == mainFrame.getRegisterButton()) {
@@ -72,6 +79,7 @@ public class MainFrameListener implements ActionListener {
 			//TODO create endgame frame
 			EndFrame endFrame = new EndFrame();
 			EndFrameListener endFrameListener = new EndFrameListener(endFrame, mainFrame);
+			GeneralController.surrender(Integer.parseInt(mainFrame.getCurrentScoreLabel().getText()));
 			mainFrame.setEnabled(false);
 		}
 	}
