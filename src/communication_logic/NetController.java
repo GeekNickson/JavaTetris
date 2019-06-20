@@ -22,9 +22,6 @@ public class NetController {
 		out.writeObject(namePass);
 	}
 
-	public void sendLevel(RequestStart level) throws IOException {
-		out.writeObject(level);
-	}
 	
 	public ResponseReg receiveRegResponse() throws ClassNotFoundException, IOException {
 		ResponseReg responseReg = (ResponseReg) in.readObject();

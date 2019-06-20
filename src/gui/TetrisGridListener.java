@@ -3,6 +3,8 @@ package gui;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
+import game.GameField;
+
 public class TetrisGridListener implements KeyListener {
 	private TetrisGrid tetrisGrid;
 	public TetrisGridListener(TetrisGrid tetrisGrid) {
@@ -20,8 +22,9 @@ public class TetrisGridListener implements KeyListener {
 		int keyCode = event.getKeyCode();
 		switch(keyCode) {
 		case KeyEvent.VK_DOWN:
-			System.out.println("down was pressed");
+			//System.out.println("down was pressed");
 			//TODO move down
+			GameField.getInstance().moveDown();
 			break;
 		case KeyEvent.VK_UP:
 			System.out.println("up was pressed");
@@ -30,18 +33,22 @@ public class TetrisGridListener implements KeyListener {
 		case KeyEvent.VK_LEFT:
 			System.out.println("left was pressed");
 			//TODO move left
+			GameField.getInstance().moveLeft();
 			break;
 		case KeyEvent.VK_RIGHT:
 			System.out.println("right was pressed");
 			//TODO move right
+			GameField.getInstance().moveRight();
 			break;
 		case KeyEvent.VK_Z:
-			//TODO rotate cw
+			//TODO rotate ccw
 			System.out.println("Z was pressed");
+			GameField.getInstance().rotateCCW();
 			break;
 		case KeyEvent.VK_C:
 			System.out.println("C was pressed");
-			//TODO rotate ccw
+			//TODO rotate cw
+			GameField.getInstance().rotateCW();
 			break;
 		default:
 			break;

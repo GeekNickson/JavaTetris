@@ -41,7 +41,7 @@ public class MainFrame extends JFrame {
 	private TetrisGridListener tetrisGridListener;
 	private int rows = 21;
 	private int columns = 10;
-	private int chosenLevel;
+	private int chosenLevel = 0;
 	
 
 	

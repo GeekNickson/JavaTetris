@@ -4,8 +4,10 @@ import java.io.IOException;
 import java.net.UnknownHostException;
 import tttp.*;
 import communication_logic.*;
+import game.GameField;
 import gui.MainFrame;
 import gui.MainFrameListener;
+import timestuff.FpsControl;
 
 public class GeneralController {
 	static NetController netController = null;
@@ -57,7 +59,11 @@ public class GeneralController {
 		}
 	}
 
-	public static void play(int level) {
+	public static void play() {
 		mainFrame.playTetris();
+		int lvl = mainFrame.getChosenLevel();
+		//start game
+		GameField.getInstance().setLevel(lvl);
+		mainFrame.getTetrisGrid().startGame();
 	}
 }
