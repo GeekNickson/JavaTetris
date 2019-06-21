@@ -3,6 +3,8 @@ package communication_logic;
 import tttp.*;
 import java.net.*;
 
+import idstuff.Player;
+
 import java.io.*;
 
 public class NetController {
@@ -42,6 +44,20 @@ public class NetController {
 		}catch(IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public Player[] askForLeaders() {
+		Player[] leaders = null;
+		RequestLeaderboard rl = new RequestLeaderboard();
+		try {
+			out.writeObject(rl);
+			ResponseLeaderboard response = (ResponseLeaderboard)in.readObject();
+			leaders = response.getLeaders();
+		} catch (ClassNotFoundException | IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return leaders;
 	}
 	
 	public ResponseReg receiveRegResponse() throws ClassNotFoundException, IOException {

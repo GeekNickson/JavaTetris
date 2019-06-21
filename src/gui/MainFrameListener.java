@@ -32,6 +32,7 @@ public class MainFrameListener implements ActionListener {
 			String ip = mainFrame.getIpAddressTextField().getText();
 			int port = Integer.parseInt(mainFrame.getPortTextField().getText());
 			GeneralController.connect(ip, port);
+			mainFrame.updateLeaders();
 			//RequestAuth a = new RequestAuth(username, password);
 			//System.out.println(a.getName()+ a.getPass());
 
@@ -78,8 +79,10 @@ public class MainFrameListener implements ActionListener {
 		if(event.getSource() == mainFrame.getSurrenderButton()) {
 			//TODO create endgame frame
 			EndFrame endFrame = new EndFrame();
+			endFrame.getActualScoreLabel().setText(mainFrame.getCurrentScoreLabel().getText());
 			EndFrameListener endFrameListener = new EndFrameListener(endFrame, mainFrame);
 			GeneralController.surrender(Integer.parseInt(mainFrame.getCurrentScoreLabel().getText()));
+			mainFrame.updateLeaders();
 			mainFrame.setEnabled(false);
 		}
 	}

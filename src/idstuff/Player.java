@@ -1,6 +1,8 @@
 package idstuff;
 
-public class Player implements Comparable{
+import java.io.Serializable;
+
+public class Player implements Comparable, Serializable{
 	public static final int WRONG_PASS = -2;
 	public static final int WRONG_NAME = -3;
 	
@@ -26,11 +28,15 @@ public class Player implements Comparable{
 		}
 		Player objPl = (Player) obj;
 		// equality provided by matching name and p|assword
-		return (objPl.name == name)&&(objPl.password == password);
+		return (objPl.name.equals(name))&&(objPl.password.equals(password));
 	}
 	public String getName() {
 		return name;
 	}
+	/*
+	public String getPassword() {
+		return password;
+	}*/
 	
 	// 
 	public boolean match(String name, String password) {

@@ -3,6 +3,9 @@ package gui;
 import javax.swing.*;
 import javax.swing.table.TableCellRenderer;
 
+import general_controller.GeneralController;
+import idstuff.Player;
+
 import java.awt.*;
 
 public class MainFrame extends JFrame {
@@ -34,7 +37,8 @@ public class MainFrame extends JFrame {
 	private JButton levelTwentyButton;
 	private JButton levelTwentyFiveButton;
 	private JButton surrenderButton;
-	private JTable scoreboardTable;
+	//private JTable scoreboardTable;
+	private TextArea scoresTextArea;
 	private Font mainFont = new Font("Comic Sans MS", Font.PLAIN, 24);
 	private Font levelFont = new Font("Showcard Gothic", Font.PLAIN, 24);
 	private Font levelTextFont = new Font("Showcard Gothic", Font.PLAIN, 14);
@@ -160,6 +164,12 @@ public class MainFrame extends JFrame {
 		nameScoreLabel.setFont(mainFont);
 		nameScoreLabel.setBounds(560, 230, 300, 30);
 		add(nameScoreLabel);
+		scoresTextArea = new TextArea();
+		scoresTextArea.setBounds(560, 260, 300, 150);
+		scoresTextArea.setEditable(false);
+		scoresTextArea.setFont(mainFont);
+		add(scoresTextArea);
+		/*
 		scoreboardTable = new JTable(5, 2) {
 			public Component prepareRenderer(TableCellRenderer renderer, int row, int column) {
 				JComponent jc = (JComponent) super.prepareRenderer(renderer, row, column);
@@ -175,7 +185,7 @@ public class MainFrame extends JFrame {
 		scoreboardTable.setOpaque(true);
 		// scoreboardTable.setBorder(border);
 		scoreboardTable.setRowHeight(40);
-		add(scoreboardTable);
+		add(scoreboardTable);*/
 		// Game
 		tetrisGrid = new TetrisGrid(this,rows, columns);
 		tetrisGrid.setVisible(false);
@@ -234,7 +244,8 @@ public class MainFrame extends JFrame {
 		levelTwentyButton.setVisible(true);
 		levelTwentyFiveButton.setVisible(true);
 		nameScoreLabel.setVisible(true);
-		scoreboardTable.setVisible(true);
+		//scoreboardTable.setVisible(true);
+		scoresTextArea.setVisible(true);
 		selectLevelLabel.setVisible(true);
 	}
 
@@ -266,7 +277,8 @@ public class MainFrame extends JFrame {
 		levelTwentyButton.setVisible(true);
 		levelTwentyFiveButton.setVisible(true);
 		nameScoreLabel.setVisible(true);
-		scoreboardTable.setVisible(true);
+		//scoreboardTable.setVisible(true);
+		scoresTextArea.setVisible(true);
 		selectLevelLabel.setVisible(true);
 		surrenderButton.setVisible(false);
 	}
@@ -288,7 +300,8 @@ public class MainFrame extends JFrame {
 		levelTwentyButton.setVisible(false);
 		levelTwentyFiveButton.setVisible(false);
 		nameScoreLabel.setVisible(false);
-		scoreboardTable.setVisible(false);
+		//scoreboardTable.setVisible(false);
+		scoresTextArea.setVisible(false);
 		selectLevelLabel.setVisible(false);
 		greetingsLabel.setVisible(false);
 		tetrisGrid.setVisible(true);
@@ -296,7 +309,22 @@ public class MainFrame extends JFrame {
 		currentScoreLabel.setVisible(true);
 		surrenderButton.setVisible(true);
 	}
+	
+	public void updateLeaders() {
+		Player[] leaders = GeneralController.getLeaders();
+		String scoresText = "";
+		for(Player p : leaders) {
+			scoresText+=p.getName()+"\t \t"+p.getMaxScore()+"\n";
+		}
+		scoresTextArea.setText(scoresText);
+	}
 
+	public TextArea getScoresTextArea() {
+		return scoresTextArea;
+	}
+	public void setScoresTextArea(TextArea scoresTextArea) {
+		this.scoresTextArea = scoresTextArea;
+	}
 	public JLabel getUsernameLabel() {
 		return usernameLabel;
 	}
@@ -512,14 +540,14 @@ public class MainFrame extends JFrame {
 	public void setLevelTwentyFiveButton(JButton levelTwentyFiveButton) {
 		this.levelTwentyFiveButton = levelTwentyFiveButton;
 	}
-
+/*
 	public JTable getScoreboardTable() {
 		return scoreboardTable;
 	}
 
 	public void setScoreboardTable(JTable scoreboardTable) {
 		this.scoreboardTable = scoreboardTable;
-	}
+	}*/
 
 	public Font getLevelFont() {
 		return levelFont;

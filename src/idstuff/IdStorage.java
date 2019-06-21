@@ -3,7 +3,7 @@ package idstuff;
 import java.io.*;
 import java.util.ArrayList;
 
-public class IdStorage extends ArrayList<Player>{
+public class IdStorage extends ArrayList<Player> implements Serializable{
 	private static IdStorage storage = new IdStorage();
 	private IdStorage() {
 		
@@ -39,7 +39,7 @@ public class IdStorage extends ArrayList<Player>{
 		}
 		Player pl = (Player) o;
 		for(Player observable:storage) {
-			if(observable.getName()==pl.getName()) {
+			if(observable.getName().equals(pl.getName())) {
 				return true;
 			}
 		}
@@ -69,19 +69,21 @@ public class IdStorage extends ArrayList<Player>{
 	
 	//default constructor
 	
-	//load from file constructor
-	public void create(String path){
+	//load from file
+	public void load(String path){
 		if(path == "default_path") path = storageFilePath;
 		FileInputStream fis;
-		try {
-			fis = new FileInputStream(path);
-			ObjectInputStream ois = new ObjectInputStream(fis);
-			storage.addAll((IdStorage)ois.readObject());
-			
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+			try {
+				fis = new FileInputStream(path);
+				ObjectInputStream input = new ObjectInputStream(fis);
+				storage.addAll((IdStorage)input.readObject());
+			} catch (FileNotFoundException e) {
+				saveToFile();
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 	}
 	
 	
@@ -123,4 +125,10 @@ public class IdStorage extends ArrayList<Player>{
 		return result;
 	}
 
+	public void printInfo() {
+		IdStorage s= IdStorage.getInstance();
+		for(Player p : s) {
+			System.out.println("name: "+p.getName());
+		}
+	}
 }

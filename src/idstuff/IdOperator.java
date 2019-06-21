@@ -22,8 +22,8 @@ public class IdOperator {
 	private IdStorage storage = IdStorage.getInstance();
 	
 	
-	public void create(String storagePath) {
-		IdStorage.getInstance().create(storagePath);
+	public void load(String storagePath) {
+		IdStorage.getInstance().load(storagePath);
 	}
 	
 	public int register(RequestReg request) {
@@ -33,14 +33,17 @@ public class IdOperator {
 		}
 		//TODO send message: register fine
 		storage.add(newPlayer);
+		storage.saveToFile();
 		return IdOperator.REGISTER_SUCCESS;
 	}
 	
 	public Player authenticate(RequestAuth request) {
 		Player result = new Player(request.getName(),request.getPass());
+		System.out.println("authenticating "+result.getName());
+		//storage.printInfo();
 		if(!storage.contains(result)) {
 			// name match failed
-			// there's no player with operator name
+			// there's no player with this name
 			// TODO send message: there's no such user
 			result.setId(Player.WRONG_NAME);
 			return result;

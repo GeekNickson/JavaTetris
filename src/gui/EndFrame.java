@@ -32,7 +32,7 @@ public class EndFrame extends JFrame {
 		actualScoreLabel = new JLabel();
 		actualScoreLabel.setFont(mainFont);
 		actualScoreLabel.setBounds(115,110, 100, 30);
-		actualScoreLabel.setVisible(false);
+		actualScoreLabel.setVisible(true);
 		add(actualScoreLabel);
 		playAgainButton = new JButton("Try again");
 		playAgainButton.setBounds(20, 170, 120, 50);

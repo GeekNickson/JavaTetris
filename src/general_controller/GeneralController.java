@@ -7,6 +7,7 @@ import communication_logic.*;
 import game.GameField;
 import gui.MainFrame;
 import gui.MainFrameListener;
+import idstuff.Player;
 import timestuff.FpsControl;
 
 public class GeneralController {
@@ -79,6 +80,9 @@ public class GeneralController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	public static Player[] getLeaders() {
+		return netController.askForLeaders();
 	}
 	
 	public static void surrender(int score) {
